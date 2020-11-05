@@ -22,6 +22,27 @@ public class Deplacer implements Behavior {
     	pilot.travel(distance);
     }
     
+    private float[] colorRGB() {
+    	Port s3 = LocalEV3.get().getPort("S3");
+    	EV3ColorSensor colorSensor = new EV3ColorSensor(s3);
+
+    	SampleProvider color =  colorSensor.getRGBMode();
+    	float[] sample = new float[color.sampleSize()];
+    	color.fetchSample(sample, 0);
+
+
+    	float RedValue = (float) sample[0] ;
+    	float GreenValue = (float) sample[1] ;
+    	float BlueValue = (float) sample[2] ;
+
+
+    	LCD.drawString("R: "+ Math.round(RedValue * 100.0) + "\n V: " +  Math.round(GreenValue * 100.0) + "\n B:" +  Math.round(BlueValue * 100.0),0,4);
+    	Button.waitForAnyPress();
+
+    	colorSensor.close();
+    	return sample ;
+    }
+    
     
 	public boolean takeControl() {
 		return true;	
