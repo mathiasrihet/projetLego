@@ -4,6 +4,7 @@ import lejos.hardware.Audio;
 import lejos.hardware.Button;
 import lejos.hardware.Key;
 import lejos.hardware.KeyListener;
+import lejos.hardware.Sounds;
 import lejos.hardware.ev3.EV3;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
@@ -30,6 +31,7 @@ public class Rotate90Test {
       // register custom key listener
       Button.ESCAPE.addKeyListener(new KeyListener() {
          @Override
+		@Override
          public void keyPressed(Key k) {
             System.out.println("Bye...");
             if (k.getId() == Button.ID_ESCAPE) {
@@ -38,6 +40,7 @@ public class Rotate90Test {
          }
 
          @Override
+		@Override
          public void keyReleased(Key k) {
          }
       });
@@ -45,6 +48,7 @@ public class Rotate90Test {
       // write current angle on demand
       Button.DOWN.addKeyListener(new KeyListener() {
          @Override
+		@Override
          public void keyPressed(Key k) {
             if (k.getId() == Button.ID_DOWN) {
                System.out.println("Current angle:" + getGyroAngle());
@@ -52,6 +56,7 @@ public class Rotate90Test {
          }
 
          @Override
+		@Override
          public void keyReleased(Key k) {
          }
       });
@@ -59,6 +64,7 @@ public class Rotate90Test {
       // reset gyro
       Button.UP.addKeyListener(new KeyListener() {
          @Override
+		@Override
          public void keyPressed(Key k) {
             if (k.getId() == Button.ID_UP) {
                resetGyro();
@@ -66,6 +72,7 @@ public class Rotate90Test {
          }
 
          @Override
+		@Override
          public void keyReleased(Key k) {
          }
       });
@@ -99,7 +106,7 @@ public class Rotate90Test {
       rightMotor = new UnregulatedMotor(MotorPort.C);
       System.out.println("Right motor init");
       gyroSamples = gyro.getAngleMode();
-      audio.systemSound(Audio.DOUBLE_BEEP);
+      audio.systemSound(Sounds.DOUBLE_BEEP);
    }
    
    public float getGyroAngleRaw() {
