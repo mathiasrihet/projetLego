@@ -5,7 +5,8 @@ import lejos.hardware.motor.Motor;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 
-public class Arreter implements Behavior{
+public class Stop implements Behavior{
+	//Behavior qui stop tout si on appuie sur le bouton de gauche
 	private Arbitrator arby;
 	
 	public boolean takeControl() {

@@ -1,21 +1,19 @@
 package lego;
-
 import lejos.hardware.Button;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
-import lejos.robotics.subsumption.Behavior;
 import lejos.robotics.SampleProvider;
-import lejos.robotics.chassis.*;
-import lejos.robotics.navigation.*;
-//Classe à supprimer
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.subsumption.Behavior;
 
-
-
-
-public class Deplacer implements Behavior {
+public class My_turn implements Behavior{
+	//Variables à trier
 	Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 56.).offset(-60);
     Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 56.).offset(60);
     Chassis chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2}, 2);
@@ -100,23 +98,43 @@ public class Deplacer implements Behavior {
         System.out.println(colorString);
     	return colorString ;
     }
+    //Variables à trier jusque là
     
     
-	@Override
+	
 	public boolean takeControl() {
-		return true;	
+		return false;
 	}
 	
-	@Override
 	public void suppress() {
 		Motor.B.stop(true);
 		Motor.C.stop(true);
 	}
-	
-	@Override
+
+    
 	public void action() {
+		//Variables: sa position, la position de l'autre robot, la couleur demandée
+		int couleur = 3;
+		int[][] position = {{0, 0},{-1,-1}};
+		int[][] obstacle = {{1, 3},{2, 2}};
+		
+		//Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
+		int [] destination = Tests.lookFor(couleur, position, obstacle);
+		
+		//Le robot se déplace sur l'axe avec lequel il est aligné pour se rapprocher de la case
 		pilot.setLinearSpeed(20);
-		this.travel(2);
+		this.travel(destination [Tests.is_parallel_to(position)]-position[0][Tests.is_parallel_to(position)]);
+		
+		//Le robot tourne pour se déplacer sur l'autre axe
+		//this.rotate() à écrire
+		
+		//Puis avance sur cet axe (avec lequel il est maintenant parallèle)
+		//this.travel(destination [Tests.is_parallel_to(position)]-position[0][Tests.is_parallel_to(position)]);
+		
+		//On est arrivé ! Plus qu'à tirer un numéro et l'envoyer à l'autre robot !
+		Tests.colorchoice();
+		
+		//Note: si le robot rencontre un obstacle, le comportement "Avoid" doit récupérer la priorité
+		
 	}
 }
-
