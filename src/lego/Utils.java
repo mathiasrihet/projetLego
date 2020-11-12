@@ -3,7 +3,7 @@ import java.util.Random;
 
 //Classe avec différentes fonctions permettant au robot de tester certaines choses
 
-public class Tests {
+public class Utils {
 	
 	/* On utilise la norme suivante:
 	 * 0 = "Rouge"
@@ -29,7 +29,7 @@ public class Tests {
 	   int[] closest = {5, 7, 12};
 	   for(int x = 0; x<5; x++) {
 		   for(int y = 0; y<7; y++) {
-			   if (Tests.tapis[x][y] == couleur) {					   
+			   if (Utils.tapis[x][y] == couleur) {					   
 				   int diff = Math.abs(x-position[0][0])+ Math.abs(y-position[0][1]);
 				   int[] pos = {x, y, diff};
 				   if (pos[2]<closest[2]) {
@@ -75,7 +75,7 @@ public class Tests {
    
    //Renvoie 0 si le robot est parallèle à l'axe x, 1 si parallèle à y
    public static int is_parallel_to(int[][] position) {
-	   if (Tests.sign(position[0][0]-position[1][0])==Tests.sign(position[0][1]-position[1][1])){
+	   if (Utils.sign(position[0][0]-position[1][0])==Utils.sign(position[0][1]-position[1][1])){
 		   return 0;
 	   }
 	   else {

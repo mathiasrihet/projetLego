@@ -18,7 +18,7 @@ public class Main {
 		Arbitrator arby = new Arbitrator(bArray);
 		b4.setArbi(arby);
 		
-		LCD.drawString("Je suis pas petit",0,4);
+		LCD.drawString("Salut !",0,4);
 		LCD.refresh();
 		Button.waitForAnyPress();//Le robot attend confirmation du démarrage par pression d'un bouton.
 		

@@ -103,7 +103,7 @@ public class My_turn implements Behavior{
     
 	
 	public boolean takeControl() {
-		return false;
+		return Button.RIGHT.isDown();
 	}
 	
 	public void suppress() {
@@ -114,16 +114,19 @@ public class My_turn implements Behavior{
     
 	public void action() {
 		//Variables: sa position, la position de l'autre robot, la couleur demandée
-		int couleur = 3;
-		int[][] position = {{0, 0},{-1,-1}};
-		int[][] obstacle = {{1, 3},{2, 2}};
+		int couleur = 4;
+		int[][] position = {{4, 1},{3,0}};
+		int[][] obstacle = {{3, 5},{4, 6}};
 		
 		//Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
-		int [] destination = Tests.lookFor(couleur, position, obstacle);
+		int [] destination = Utils.lookFor(couleur, position, obstacle);
 		
 		//Le robot se déplace sur l'axe avec lequel il est aligné pour se rapprocher de la case
+		if (Utils.sign(destination[Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)])== -1) {
+			pilot.rotate(180);
+		}
 		pilot.setLinearSpeed(20);
-		this.travel(destination [Tests.is_parallel_to(position)]-position[0][Tests.is_parallel_to(position)]);
+		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 		
 		//Le robot tourne pour se déplacer sur l'autre axe
 		//this.rotate() à écrire
@@ -132,7 +135,7 @@ public class My_turn implements Behavior{
 		//this.travel(destination [Tests.is_parallel_to(position)]-position[0][Tests.is_parallel_to(position)]);
 		
 		//On est arrivé ! Plus qu'à tirer un numéro et l'envoyer à l'autre robot !
-		Tests.colorchoice();
+		Utils.colorchoice();
 		
 		//Note: si le robot rencontre un obstacle, le comportement "Avoid" doit récupérer la priorité
 		
