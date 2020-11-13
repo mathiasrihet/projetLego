@@ -11,7 +11,6 @@ import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 
 public class My_turn implements Behavior{
-	//Variables � trier
 	Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 56.).offset(-60);
     Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 56.).offset(60);
     Chassis chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2}, 2);
