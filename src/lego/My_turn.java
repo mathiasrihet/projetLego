@@ -30,7 +30,7 @@ public class My_turn implements Behavior{
 		gyro.reset();
 		float[] angle = new float[]{0.0f};
 		
-		pilot.travel(20);
+		pilot.travel(1);
 		
 		while(pilot.isMoving())Thread.yield();
 			Motor.C.forward();

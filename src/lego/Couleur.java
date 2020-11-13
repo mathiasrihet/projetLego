@@ -5,6 +5,7 @@ import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
+import lejos.utility.Delay;
 
 
 public class Couleur {
@@ -161,7 +162,8 @@ public static String colorRGB() {
 
 
 	LCD.drawString("R: "+ Math.round(RedValue * 100.0) + "\n V: " +  Math.round(GreenValue * 100.0) + "\n B:" +  Math.round(BlueValue * 100.0),0,4);
-	Button.waitForAnyPress();
+	Delay.msDelay(500);
+	LCD.clear();
 
 	colorSensor.close();
 	
