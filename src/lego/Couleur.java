@@ -157,7 +157,7 @@ public static String colorRGB() {
 
 
 	LCD.drawString("R: "+ Couleur.red_initial[0] + "\n V: " +  Couleur.red_initial[1] + "\n B:" +  Couleur.red_initial[2],0,4);
-	Delay.msDelay(500);
+	Delay.msDelay(1000);
 	LCD.clear();
 
 	colorSensor.close();
