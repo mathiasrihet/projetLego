@@ -1,10 +1,14 @@
 package lego;
 import lejos.hardware.motor.Motor;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3GyroSensor;
+import lejos.hardware.sensor.SensorMode;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
 
 public class My_turn implements Behavior{
 	//Variables � trier
@@ -21,7 +25,22 @@ public class My_turn implements Behavior{
     	pilot.travel(distance);
     }
     
-    
+	private void rotate(float threshold) {
+		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
+		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+		gyro.reset();
+		float[] angle = new float[]{0.0f};
+		
+		pilot.travel(20);
+		
+		while(pilot.isMoving())Thread.yield();
+			Motor.C.forward();
+		while(Math.abs(angle[0])<threshold) {
+			Delay.msDelay(500);
+			angleProvider.fetchSample(angle, 0);
+		}
+		gyro.close();
+	}
 	
 	public boolean takeControl() {
 		return false;
