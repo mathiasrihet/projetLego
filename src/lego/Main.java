@@ -10,8 +10,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Couleur.color_init();
-		
 		Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
 		My_turn b2 = new My_turn(); //Le robot a reï¿½u un signal bluetooth et effectue son tour de jeu (i.e. va se placer ï¿½ la case la plus proche de la couleur indiquï¿½e).
 		Avoid b3 = new Avoid(); //Le robot a dï¿½tectï¿½ un obstacle et se met en position pour le contourner
@@ -20,7 +18,9 @@ public class Main {
 		Arbitrator arby = new Arbitrator(bArray);
 		b4.setArbi(arby);
 		
-		LCD.drawString("Salut !",0,4);
+		Couleur.color_init();
+		
+		LCD.drawString("Je suis prêt!",0,4);
 		LCD.refresh();
 		Button.waitForAnyPress();//Le robot attend confirmation du dï¿½marrage par pression d'un bouton.
 		
