@@ -1,8 +1,7 @@
 package lego;
 
-import java.io.DataOutputStream;
-import java.io.OutputStream;
 
+import java.io.OutputStream;
 import lejos.hardware.Button;
 import lejos.hardware.ev3.EV3;
 import lejos.hardware.ev3.LocalEV3;
@@ -10,6 +9,8 @@ import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnection;
 import lejos.remote.nxt.BTConnector;
 import lejos.remote.nxt.NXTConnection;
+import java.io.ObjectOutputStream;
+
 
  
 
@@ -17,6 +18,8 @@ import lejos.remote.nxt.NXTConnection;
 
 
 public class Emetteur {
+
+ 
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -34,7 +37,7 @@ public class Emetteur {
             //droite = 00:16:53:43:4E:26
             //gauche = 00:16:53:43:8E:49
             BTConnector bt = new BTConnector();
-            BTConnection btc = bt.connect("00:16:53:43:EB:88", NXTConnection.PACKET);//le premier parametre est l'adresse du recepteur affiche sur l'ecra de l'emetteur apres association (pair) bluetooth
+            BTConnection btc = bt.connect("00:16:53:43:EB:88", NXTConnection.PACKET);//le premier paramï¿½tre est l'adresse du rï¿½cepteur affichï¿½ sur l'ï¿½cra de l'ï¿½metteur aprï¿½s association (pair) bluetooth
 
  
 
@@ -48,7 +51,7 @@ public class Emetteur {
             //InputStream is = btc.openInputStream();
             OutputStream os = btc.openOutputStream();
             //DataInputStream dis = new DataInputStream(is);
-            DataOutputStream dos = new DataOutputStream(os);
+            ObjectOutputStream oos = new ObjectOutputStream(os);
 
  
 
@@ -82,14 +85,23 @@ public class Emetteur {
 
  
 
+            int x1 = 0;
+            int y1 = 0;
+            int x2 = 1;
+            int y2 = 1;
+
+ 
+
+            int[] myIntArray = new int[]{nombreAleatoire,x1,y1,x2,y2};
+
  
 
             System.out.println("\n\nEnvoi : " + colorString);
-            dos.write(nombreAleatoire); // ecrit une valeur dans le flux
-            dos.flush(); // force l'envoi
-            System.out.println("\nEnvoyé : " + colorString);
+            oos.writeObject(myIntArray); // ï¿½crit une valeur dans le flux
+            oos.flush(); // force lï¿½envoi
+            System.out.println("\nEnvoyÃ© : " + colorString);
             //dis.close();
-            dos.close();
+            oos.close();
             btc.close();
             LCD.clear();
 

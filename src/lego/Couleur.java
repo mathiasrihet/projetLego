@@ -156,11 +156,6 @@ public static String colorRGB() {
 	color.fetchSample(sample, 0);
 
 
-	float RedValue = sample[0] ;
-	float GreenValue = sample[1] ;
-	float BlueValue = sample[2] ;
-
-
 	LCD.drawString("R: "+ Couleur.red_initial[0] + "\n V: " +  Couleur.red_initial[1] + "\n B:" +  Couleur.red_initial[2],0,4);
 	Delay.msDelay(500);
 	LCD.clear();

@@ -1,15 +1,17 @@
 package lego;
 
- 
 import java.io.DataInputStream;
+import java.io.ObjectOutputStream;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnector;
 import lejos.remote.nxt.NXTConnection;
 
  
-
+/*
 public class Recepteur {
 
  
@@ -41,24 +43,30 @@ public class Recepteur {
 
             InputStream is = btc.openInputStream();
             //OutputStream os = btc.openOutputStream();
-            DataInputStream dis = new DataInputStream(is);
+            ObjectInputStream ois = new ObjectInputStream(is);
             //DataOutputStream dos = new DataOutputStream(os);
 
  
 
-            int valeur = dis.read();
+            int[] valeurs = ois.readObject();
+            int couleur = valeurs[0];
+            int x1 = valeurs[1];
+            int y1 = valeurs[2];
+            int x2 = valeurs[3];
+            int y2 = valeurs[4];
 
  
 
+ 
 
-            dis.close();
+            ois.close();
             //dos.close();
             btc.close();
 
  
 
             String colorString;
-            switch (valeur) {
+            switch (couleur) {
           case 0:  colorString = "Rouge";
                    break;
           case 1:  colorString = "Bleu";
@@ -88,4 +96,4 @@ public class Recepteur {
 
  
 
-}
+}*/
