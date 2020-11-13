@@ -53,28 +53,32 @@ public class My_turn implements Behavior{
 
     
 	public void action() {
-		//Variables: sa position, la position de l'autre robot, la couleur demandï¿½e
-		int couleur = 3;
-		int[][] position = {{0, 0},{-1,-1}};
-		int[][] obstacle = {{1, 3},{2, 2}};
+		//Variables: sa position, la position de l'autre robot, la couleur demandée
+		int couleur = 4;
+		int[][] position = {{4, 1},{3,0}};
+		int[][] obstacle = {{3, 5},{4, 6}};
 		
-		//Le robot cherche la case la plus proche de la couleur demandï¿½e (non-occupï¿½e)
+		//Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
 		int [] destination = Utils.lookFor(couleur, position, obstacle);
 		
-		//Le robot se dï¿½place sur l'axe avec lequel il est alignï¿½ pour se rapprocher de la case
+		//Le robot se déplace sur l'axe avec lequel il est aligné pour se rapprocher de la case
 		pilot.setLinearSpeed(20);
-		this.travel(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]);
 		
-		//Le robot tourne pour se dï¿½placer sur l'autre axe
-		//this.rotate() ï¿½ ï¿½crire
+		if (Utils.sign(destination[Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)])== -1) {
+			this.rotate(180.f);
+		}
+
+		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 		
-		//Puis avance sur cet axe (avec lequel il est maintenant parallï¿½le)
+		//Le robot tourne pour se déplacer sur l'autre axe
+		//this.rotate() à écrire
+		
+		//Puis avance sur cet axe (avec lequel il est maintenant parallèle)
 		//this.travel(destination [Tests.is_parallel_to(position)]-position[0][Tests.is_parallel_to(position)]);
 		
-		//On est arrivï¿½ ! Plus qu'ï¿½ tirer un numï¿½ro et l'envoyer ï¿½ l'autre robot !
+		//On est arrivé ! Plus qu'à tirer un numéro et l'envoyer à l'autre robot !
 		Utils.colorchoice();
 		
-		//Note: si le robot rencontre un obstacle, le comportement "Avoid" doit rï¿½cupï¿½rer la prioritï¿½
-		
+		//Note: si le robot rencontre un obstacle, le comportement "Avoid" doit récupérer la priorité
 	}
 }
