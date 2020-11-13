@@ -9,12 +9,6 @@ public class Main {
 	//Main avec les 4 Behavior
 
 	public static void main(String[] args) {
-		//float[] s = new float[]{0};
-		
-		
-		
-		
-		
 		
 		
 		
