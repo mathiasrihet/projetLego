@@ -11,7 +11,7 @@ import lejos.remote.nxt.BTConnector;
 import lejos.remote.nxt.NXTConnection;
 
  
-/*
+
 public class Recepteur {
 
  
@@ -48,7 +48,7 @@ public class Recepteur {
 
  
 
-            int[] valeurs = ois.readObject();
+            int[] valeurs = (int[])ois.readObject();
             int couleur = valeurs[0];
             int x1 = valeurs[1];
             int y1 = valeurs[2];
@@ -96,4 +96,4 @@ public class Recepteur {
 
  
 
-}*/
+}
