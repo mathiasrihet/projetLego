@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		
+		Couleur.color_init();
 		
 		Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
 		My_turn b2 = new My_turn(); //Le robot a re�u un signal bluetooth et effectue son tour de jeu (i.e. va se placer � la case la plus proche de la couleur indiqu�e).

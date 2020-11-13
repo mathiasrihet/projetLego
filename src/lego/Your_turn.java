@@ -15,7 +15,7 @@ public class Your_turn implements Behavior{
     
 	public void action() {
 		//Le robot attend de recevoir un message bluetooth
-		LCD.drawString("Et maintenant ?",0,4);
+		LCD.drawString(Couleur.colorRGB(),0,4);
 		LCD.refresh();
 		
 	}

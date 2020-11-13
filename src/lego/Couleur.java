@@ -145,8 +145,8 @@ private static float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
     
 }
 
-@SuppressWarnings("unused")
-private String colorRGB() {
+
+public static String colorRGB() {
 	Port s3 = LocalEV3.get().getPort("S3");
 	EV3ColorSensor colorSensor = new EV3ColorSensor(s3);
 
