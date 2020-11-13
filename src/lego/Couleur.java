@@ -161,7 +161,7 @@ public static String colorRGB() {
 	float BlueValue = sample[2] ;
 
 
-	LCD.drawString("R: "+ Math.round(RedValue * 100.0) + "\n V: " +  Math.round(GreenValue * 100.0) + "\n B:" +  Math.round(BlueValue * 100.0),0,4);
+	LCD.drawString("R: "+ Couleur.red_initial[0] + "\n V: " +  Couleur.red_initial[1] + "\n B:" +  Couleur.red_initial[2],0,4);
 	Delay.msDelay(500);
 	LCD.clear();
 
