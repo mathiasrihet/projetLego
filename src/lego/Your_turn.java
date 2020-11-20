@@ -5,7 +5,7 @@ import lejos.robotics.subsumption.Behavior;
 public class Your_turn implements Behavior{
 	
 	public boolean takeControl() {
-		return false; 		//Le robot exécute ce comportement s'il n'a rien de mieux à faire
+		return true; 		//Le robot exécute ce comportement s'il n'a rien de mieux à faire
 	}
 	
 	public void suppress() {
@@ -14,9 +14,9 @@ public class Your_turn implements Behavior{
 
     
 	public void action() {
-		//Le robot attend de recevoir un message bluetooth
+		/*Le robot attend de recevoir un message bluetooth
 		LCD.drawString(Couleur.colorRGB(),0,4);
-		LCD.refresh();
+		LCD.refresh();*/
 		
 	}
 }

@@ -76,10 +76,10 @@ public class Utils {
    //Renvoie 0 si le robot est parallèle à l'axe x, 1 si parallèle à y
    public static int is_parallel_to(int[][] position) {
 	   if (Utils.sign(position[0][0]-position[1][0])==Utils.sign(position[0][1]-position[1][1])){
-		   return 0;
+		   return 1;
 	   }
 	   else {
-		   return 1;
+		   return 0;
 	   }
    }
    

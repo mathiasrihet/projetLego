@@ -55,7 +55,7 @@ public class My_turn implements Behavior{
 	public void action() {
 		//Variables: sa position, la position de l'autre robot, la couleur demandée
 		int couleur = 4;
-		int[][] position = {{4, 1},{3,0}};
+		int[][] position = {{4, 1},{3,2}};
 		int[][] obstacle = {{3, 5},{4, 6}};
 		
 		//Le robot cherche la case la plus proche de la couleur demandée (non-occupée)

@@ -35,7 +35,7 @@ public class Emetteur implements Behavior{
         String waiting = "Waiting";
         EV3 ev = LocalEV3.get();
         System.out.println("--"+ev.getName()+"--");
-        Button.RIGHT.waitForPressAndRelease();
+        Button.RIGHT.waitForPressAndRelease();//a enlever à terme
         try {
 
  
@@ -71,7 +71,7 @@ public class Emetteur implements Behavior{
                  * 3 = "Orange"
                  * 4 = "Blanc"
                  */
-            int nombreAleatoire = (int)(Math.random() * 5);
+        int nombreAleatoire = (int)(Math.random() * 5);
 
  
 
@@ -116,6 +116,7 @@ public class Emetteur implements Behavior{
  
 
         } catch (Exception e) {
+        	System.out.println(e);
         }
     }
 
