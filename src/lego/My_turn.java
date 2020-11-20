@@ -34,9 +34,9 @@ public class My_turn implements Behavior{
 		pilot.travel(1);
 		
 		while(pilot.isMoving())Thread.yield();
-			Motor.C.forward();
+			Motor.B.forward();
 		while(Math.abs(angle[0])<threshold) {
-			Delay.msDelay(500);
+			Delay.msDelay(200);
 			angleProvider.fetchSample(angle, 0);
 		}
 		gyro.close();
@@ -62,7 +62,7 @@ public class My_turn implements Behavior{
 		int [] destination = Utils.lookFor(couleur, position, obstacle);
 		
 		//Le robot se déplace sur l'axe avec lequel il est aligné pour se rapprocher de la case
-		pilot.setLinearSpeed(20);
+		pilot.setLinearSpeed(30);
 		
 		if (Utils.sign(destination[Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)])== -1) {
 			this.rotate(180.f);

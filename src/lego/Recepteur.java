@@ -97,6 +97,7 @@ public class Recepteur implements Behavior{
                 Button.RIGHT.waitForPressAndRelease();
             }
         } catch (Exception e) {
+        	System.out.println(e);
         }
     }
 
