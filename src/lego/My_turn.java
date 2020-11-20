@@ -43,7 +43,7 @@ public class My_turn implements Behavior{
 	}
 	
 	public boolean takeControl() {
-		return Button.RIGHT.isDown();
+		return Button.DOWN.isDown();
 	}
 	
 	public void suppress() {
