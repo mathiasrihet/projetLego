@@ -11,10 +11,12 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
-		My_turn b2 = new My_turn(); //Le robot a re�u un signal bluetooth et effectue son tour de jeu (i.e. va se placer � la case la plus proche de la couleur indiqu�e).
+		My_turn b2 = new My_turn(); //Le robot a re�u un signal bluetooth et effectue son tour de jeu (i.e. va se placer � la case la plus proche de la couleur indiqu�e).		
 		Avoid b3 = new Avoid(); //Le robot a d�tect� un obstacle et se met en position pour le contourner
+		Recepteur b5 = new Recepteur();
+		Emetteur b6 = new Emetteur();
 		Stop b4 = new Stop(); //Le robot s'interrompt suite � une pression sur le bouton gauche.
-		Behavior[] bArray = {b1, b2, b3, b4}; // Du moins prioritaire au plus prioritaire.
+		Behavior[] bArray = {b5, b6, b1, b2, b3, b4}; // Du moins prioritaire au plus prioritaire.
 		Arbitrator arby = new Arbitrator(bArray);
 		b4.setArbi(arby);
 		

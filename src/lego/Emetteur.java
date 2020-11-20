@@ -9,6 +9,8 @@ import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnection;
 import lejos.remote.nxt.BTConnector;
 import lejos.remote.nxt.NXTConnection;
+import lejos.robotics.subsumption.Behavior;
+
 import java.io.ObjectOutputStream;
 
 
@@ -17,11 +19,17 @@ import java.io.ObjectOutputStream;
  
 
 
-public class Emetteur {
+public class Emetteur implements Behavior{
 
+	public boolean takeControl() {
+		return Button.UP.isDown();
+	}
+	
+	public void suppress() {
+	}
  
 
-    public static void main(String[] args) {
+	public void action() {
         // TODO Auto-generated method stub
         String connected = "Connected";
         String waiting = "Waiting";

@@ -9,14 +9,20 @@ import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnector;
 import lejos.remote.nxt.NXTConnection;
+import lejos.robotics.subsumption.Behavior;
 
  
 
-public class Recepteur {
+public class Recepteur implements Behavior{
 
- 
+	public boolean takeControl() {
+		return true; 		//Le robot exécute ce comportement s'il n'a rien de mieux à faire
+	}
+	
+	public void suppress() {
+	}
 
-    public static void main(String[] args) {
+	public void action() {
         // TODO Auto-generated method stub
         String connected = "Connected";
         String waiting = "Waiting";

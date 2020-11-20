@@ -1,4 +1,5 @@
 package lego;
+import lejos.hardware.Button;
 import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3GyroSensor;
@@ -42,7 +43,7 @@ public class My_turn implements Behavior{
 	}
 	
 	public boolean takeControl() {
-		return false;
+		return Button.RIGHT.isDown();
 	}
 	
 	public void suppress() {
