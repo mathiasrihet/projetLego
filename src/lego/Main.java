@@ -20,7 +20,7 @@ public class Main {
 		Arbitrator arby = new Arbitrator(bArray);
 		b4.setArbi(arby);
 		
-		Couleur.color_init();
+		//Couleur.color_init();
 		
 		LCD.drawString("Je suis prêt!",0,4);
 		LCD.refresh();
