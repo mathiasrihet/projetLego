@@ -16,7 +16,7 @@ import lejos.robotics.subsumption.Behavior;
 public class Recepteur implements Behavior{
 
 	public boolean takeControl() {
-		return Button.ENTER.isDown();		//Le robot exécute ce comportement s'il n'a rien de mieux à faire
+		return Button.ENTER.isDown();		//Le robot exï¿½cute ce comportement s'il n'a rien de mieux ï¿½ faire
 	}
 	
 	public void suppress() {
@@ -26,6 +26,7 @@ public class Recepteur implements Behavior{
         // TODO Auto-generated method stub
         String connected = "Connected";
         String waiting = "Waiting";
+        System.out.println("mode rÃ©cepteur");
 
  
 
@@ -38,7 +39,7 @@ public class Recepteur implements Behavior{
             BTConnector bt = new BTConnector();
             NXTConnection btc = bt.waitForConnection(100000, NXTConnection.PACKET);
 
- 
+            System.out.println("dans le try");
 
             if (btc !=null) {
             LCD.clear();
@@ -71,25 +72,25 @@ public class Recepteur implements Behavior{
 
  
 
-            String colorString;
+            /*String colorString;
             switch (couleur) {
-          case 0:  colorString = "Rouge";
-                   break;
-          case 1:  colorString = "Bleu";
-                   break;
-          case 2:  colorString = "Vert";
-                   break;
-          case 3:  colorString = "Orange";
-                   break;
-          case 4:  colorString = "Blanc";
-                   break;
-          default: colorString = "Invalid color";
-                   break;
-      }
+	          case 0:  colorString = "Rouge";
+	                   break;
+	          case 1:  colorString = "Bleu";
+	                   break;
+	          case 2:  colorString = "Vert";
+	                   break;
+	          case 3:  colorString = "Orange";
+	                   break;
+	          case 4:  colorString = "Blanc";
+	                   break;
+	          default: colorString = "Invalid color";
+	                   break;
+            }*/
 
  
 
-            System.out.println("Couleur reçue : " + colorString);
+            System.out.println("Couleur reï¿½ue : " + couleur);
             Button.RIGHT.waitForPressAndRelease();
             LCD.clear();
             } else {

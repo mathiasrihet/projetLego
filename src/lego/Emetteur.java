@@ -34,9 +34,10 @@ public class Emetteur implements Behavior{
         String connected = "Connected";
         String waiting = "Waiting";
         EV3 ev = LocalEV3.get();
-        System.out.println("--"+ev.getName()+"--");
+        System.out.println("mode émetteur");
         Button.RIGHT.waitForPressAndRelease();//a enlever à terme
         try {
+        	System.out.println("dans le try");
 
  
 
@@ -71,25 +72,25 @@ public class Emetteur implements Behavior{
                  * 3 = "Orange"
                  * 4 = "Blanc"
                  */
-        int nombreAleatoire = (int)(Math.random() * 5);
+            int nombreAleatoire = (int)(Math.random() * 5);
 
  
 
-      String colorString;
-      switch (nombreAleatoire) {
-          case 0:  colorString = "Rouge";
-                   break;
-          case 1:  colorString = "Bleu";
-                   break;
-          case 2:  colorString = "Vert";
-                   break;
-          case 3:  colorString = "Orange";
-                   break;
-          case 4:  colorString = "Blanc";
-                   break;
-          default: colorString = "Invalid color";
-                   break;
-      }
+            String colorString = " " + nombreAleatoire;
+            /*switch (nombreAleatoire) {
+			  case 0:  colorString = "Rouge";
+			           break;
+			  case 1:  colorString = "Bleu";
+			           break;
+			  case 2:  colorString = "Vert";
+			           break;
+			  case 3:  colorString = "Orange";
+			           break;
+			  case 4:  colorString = "Blanc";
+			           break;
+			  default: colorString = "Invalid color";
+			           break;
+            }*/
 
  
 
@@ -111,7 +112,7 @@ public class Emetteur implements Behavior{
             //dis.close();
             oos.close();
             btc.close();
-            LCD.clear();
+            //LCD.clear();
 
  
 
