@@ -37,7 +37,7 @@ public class Emetteur implements Behavior{
         System.out.println("mode émetteur");
         Button.RIGHT.waitForPressAndRelease();//a enlever à terme
         try {
-        	System.out.println("dans le try");
+            System.out.println("dans le try");
 
  
 
