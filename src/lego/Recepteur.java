@@ -16,7 +16,7 @@ import lejos.robotics.subsumption.Behavior;
 public class Recepteur implements Behavior{
 
 	public boolean takeControl() {
-		return Button.ENTER.isDown();		//Le robot ex�cute ce comportement s'il n'a rien de mieux � faire
+		return Button.ENTER.isDown();		//Le robot ex�cute ce comportement si on appuie sur le bouton du milieu
 	}
 	
 	public void suppress() {

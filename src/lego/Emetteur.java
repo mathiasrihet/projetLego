@@ -46,8 +46,8 @@ public class Emetteur implements Behavior{
             //droite = 00:16:53:43:4E:26
             //gauche = 00:16:53:43:8E:49
             BTConnector bt = new BTConnector();
-            BTConnection btc = bt.connect("00:16:53:43:EB:88", NXTConnection.PACKET);//le premier param�tre est l'adresse du r�cepteur affich� sur l'�cra de l'�metteur apr�s association (pair) bluetooth
-
+            BTConnection btc = bt.connect("00:16:53:82:76:33", NXTConnection.PACKET);//le premier param�tre est l'adresse du r�cepteur affich� sur l'�cra de l'�metteur apr�s association (pair) bluetooth
+										//Adresse de Hodor15
  
 
 
