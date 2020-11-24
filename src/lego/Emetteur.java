@@ -35,7 +35,7 @@ public class Emetteur implements Behavior{
         String waiting = "Waiting";
         EV3 ev = LocalEV3.get();
         System.out.println("mode émetteur");
-        Button.RIGHT.waitForPressAndRelease();//a enlever à terme
+        //Button.RIGHT.waitForPressAndRelease();//a enlever à terme
         try {
             System.out.println("dans le try");
 
