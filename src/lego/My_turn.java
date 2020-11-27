@@ -26,24 +26,54 @@ public class My_turn implements Behavior{
     }
     
 	private void rotate(float threshold) {
+			EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
+			SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+			gyro.reset();
+			float[] angle = new float[]{0.0f};
+			
+			pilot.travel(1);
+			
+			while(pilot.isMoving())Thread.yield();
+				Motor.B.forward();
+			while(Math.abs(angle[0])<threshold) {
+				Delay.msDelay(200);
+				angleProvider.fetchSample(angle, 0);
+		}
+		gyro.close();
+	}
+	
+	private void turn(int sign) {
 		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
 		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
 		gyro.reset();
 		float[] angle = new float[]{0.0f};
 		
-		pilot.travel(1);
-		
-		while(pilot.isMoving())Thread.yield();
-			Motor.B.forward();
-		while(Math.abs(angle[0])<threshold) {
-			Delay.msDelay(200);
-			angleProvider.fetchSample(angle, 0);
+		if(sign == 1) {//Turn right
+
+			pilot.travel(1);
+			
+			while(pilot.isMoving())Thread.yield();
+				Motor.B.forward();
+			while(Math.abs(angle[0])<90) {
+				Delay.msDelay(200);
+				angleProvider.fetchSample(angle, 0);
+			}	
 		}
+		else {//Turn left
+			while(pilot.isMoving())Thread.yield();
+			Motor.B.forward();
+			Motor.C.backward();
+			while(Math.abs(angle[0])<90) {
+				Delay.msDelay(200);
+				angleProvider.fetchSample(angle, 0);	
+			}
+		}
+		
 		gyro.close();
 	}
 	
 	public boolean takeControl() {
-		return false;
+		return Button.DOWN.isDown();
 	}
 	
 	public void suppress() {
@@ -69,6 +99,12 @@ public class My_turn implements Behavior{
 		}
 
 		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
+		
+		this.turn(1);
+		
+		this.travel(1);
+		
+		this.turn(0);
 		
 		//Le robot tourne pour se déplacer sur l'autre axe
 		//this.rotate() à écrire
