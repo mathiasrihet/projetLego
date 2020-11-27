@@ -47,7 +47,7 @@ public class My_turn implements Behavior{
 		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
 		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
 		gyro.reset();
-		float[] angle = new float[]{0.0f};
+		float[] angle = new float[]{0.00f};
 		
 		if(sign == 1) {//Turn right
 
@@ -65,8 +65,8 @@ public class My_turn implements Behavior{
 			pilot.travel(1);
 			
 			while(pilot.isMoving())Thread.yield();
-			Motor.C.forward();
-			Motor.B.backward();
+				Motor.C.forward();
+				Motor.B.backward();
 			while(Math.abs(angle[0])<90) {
 				Delay.msDelay(100);
 				angleProvider.fetchSample(angle, 0);	
@@ -98,18 +98,20 @@ public class My_turn implements Behavior{
 		//Le robot se déplace sur l'axe avec lequel il est aligné pour se rapprocher de la case
 		pilot.setLinearSpeed(40);
 		
-		if (Utils.sign(destination[Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)])== -1) {
+		/*if (Utils.sign(destination[Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)])== -1) {
 			this.rotate(180.f);
 		}
 
 		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 		
 		this.travel(0.5);
-		this.turn(1);
+		this.turn(1);*/
 		
 		this.travel(1);
 		
 		this.turn(0);
+		
+		this.travel(1);
 		
 		//Le robot tourne pour se déplacer sur l'autre axe
 		//this.rotate() à écrire
