@@ -17,7 +17,7 @@ public class My_turn implements Behavior{
     Chassis chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2}, 2);
     MovePilot pilot = new MovePilot(chassis);
     
-    private void travel(int unite) {
+    private void travel(double unite) {
     	double epaisseurTrait = 1.5;
     	double epaisseurCase = 12;
     	
@@ -36,10 +36,11 @@ public class My_turn implements Behavior{
 			while(pilot.isMoving())Thread.yield();
 				Motor.B.forward();
 			while(Math.abs(angle[0])<threshold) {
-				Delay.msDelay(200);
+				Delay.msDelay(100);
 				angleProvider.fetchSample(angle, 0);
 		}
 		gyro.close();
+		Motor.B.stop(true);
 	}
 	
 	private void turn(int sign) {
@@ -55,16 +56,19 @@ public class My_turn implements Behavior{
 			while(pilot.isMoving())Thread.yield();
 				Motor.B.forward();
 			while(Math.abs(angle[0])<90) {
-				Delay.msDelay(200);
+				Delay.msDelay(100);
 				angleProvider.fetchSample(angle, 0);
 			}	
 		}
 		else {//Turn left
+			
+			pilot.travel(1);
+			
 			while(pilot.isMoving())Thread.yield();
-			Motor.B.forward();
-			Motor.C.backward();
+			Motor.C.forward();
+			Motor.B.backward();
 			while(Math.abs(angle[0])<90) {
-				Delay.msDelay(200);
+				Delay.msDelay(100);
 				angleProvider.fetchSample(angle, 0);	
 			}
 		}
@@ -92,7 +96,7 @@ public class My_turn implements Behavior{
 		int [] destination = Utils.lookFor(couleur, position, obstacle);
 		
 		//Le robot se déplace sur l'axe avec lequel il est aligné pour se rapprocher de la case
-		pilot.setLinearSpeed(30);
+		pilot.setLinearSpeed(40);
 		
 		if (Utils.sign(destination[Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)])== -1) {
 			this.rotate(180.f);
@@ -100,6 +104,7 @@ public class My_turn implements Behavior{
 
 		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 		
+		this.travel(0.5);
 		this.turn(1);
 		
 		this.travel(1);

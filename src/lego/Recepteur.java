@@ -1,9 +1,13 @@
 package lego;
 
+ 
+
 import java.io.DataInputStream;
 import java.io.ObjectOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+
+ 
 
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
@@ -13,20 +17,32 @@ import lejos.robotics.subsumption.Behavior;
 
  
 
+ 
+
+ 
+
 public class Recepteur implements Behavior{
 
-	public boolean takeControl() {
-		return Button.ENTER.isDown();		//Le robot ex�cute ce comportement si on appuie sur le bouton du milieu
-	}
-	
-	public void suppress() {
-	}
+ 
 
-	public void action() {
+    public boolean takeControl() {
+        return Button.ENTER.isDown();        //Le robot ex�cute ce comportement si on appuie sur le bouton du milieu
+    }
+    
+    public void suppress() {
+    }
+
+ 
+
+    public void action() {
         // TODO Auto-generated method stub
         String connected = "Connected";
         String waiting = "Waiting";
-        System.out.println("mode récepteur");
+        System.out.println("mode recepteur");
+
+ 
+
+ 
 
  
 
@@ -36,10 +52,18 @@ public class Recepteur implements Behavior{
 
  
 
+ 
+
+ 
+
             BTConnector bt = new BTConnector();
             NXTConnection btc = bt.waitForConnection(100000, NXTConnection.PACKET);
 
+ 
+
             System.out.println("dans le try");
+
+ 
 
             if (btc !=null) {
             LCD.clear();
@@ -48,10 +72,18 @@ public class Recepteur implements Behavior{
 
  
 
+ 
+
+ 
+
             InputStream is = btc.openInputStream();
             //OutputStream os = btc.openOutputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
             //DataOutputStream dos = new DataOutputStream(os);
+
+ 
+
+ 
 
  
 
@@ -66,31 +98,45 @@ public class Recepteur implements Behavior{
 
  
 
+ 
+
+ 
+
+ 
+
             ois.close();
             //dos.close();
             btc.close();
 
  
 
-            /*String colorString;
-            switch (couleur) {
-	          case 0:  colorString = "Rouge";
-	                   break;
-	          case 1:  colorString = "Bleu";
-	                   break;
-	          case 2:  colorString = "Vert";
-	                   break;
-	          case 3:  colorString = "Orange";
-	                   break;
-	          case 4:  colorString = "Blanc";
-	                   break;
-	          default: colorString = "Invalid color";
-	                   break;
-            }*/
+ 
 
  
 
-            System.out.println("Couleur re�ue : " + couleur);
+            String colorString;
+            switch (couleur) {
+              case 0:  colorString = "Rouge";
+                       break;
+              case 1:  colorString = "Bleu";
+                       break;
+              case 2:  colorString = "Vert";
+                       break;
+              case 3:  colorString = "Orange";
+                       break;
+              case 4:  colorString = "Blanc";
+                       break;
+              default: colorString = "Invalid color";
+                       break;
+            }
+
+ 
+
+ 
+
+ 
+
+            System.out.println("Couleur recue : " + colorString);
             Button.RIGHT.waitForPressAndRelease();
             LCD.clear();
             } else {
@@ -98,9 +144,13 @@ public class Recepteur implements Behavior{
                 Button.RIGHT.waitForPressAndRelease();
             }
         } catch (Exception e) {
-        	System.out.println(e);
+            System.out.println(e);
         }
     }
+
+ 
+
+ 
 
  
 
