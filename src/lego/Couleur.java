@@ -10,6 +10,7 @@ import lejos.utility.Delay;
 
 public class Couleur {
 
+public static String actual_color = "";
  
 
 static float[] red_initial = new float[]{255,160,122};
