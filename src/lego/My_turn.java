@@ -67,7 +67,7 @@ public class My_turn implements Behavior{
 			while(pilot.isMoving())Thread.yield();
 				Motor.C.forward();
 				Motor.B.backward();
-			while(Math.abs(angle[0])<90) {
+			while(Math.abs(angle[0])<45) {
 				Delay.msDelay(100);
 				angleProvider.fetchSample(angle, 0);	
 			}
