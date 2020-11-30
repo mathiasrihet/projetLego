@@ -20,40 +20,40 @@ import lejos.remote.nxt.NXTConnection;
 
 
 public class Recepteur implements Behavior{
-	private static int sent_color = 5;
-	private static int actual_color = 5;
-	private static int[][] position = {{4, 1},{3,2}};
-	private static int[][] obstacle = {{3, 5},{4, 6}};
+	private int sent_color = 5;
+	private int actual_color = 5;
+	private int[][] position = {{4, 1},{3,2}};
+	private int[][] obstacle = {{3, 5},{4, 6}};
 
 	
 	/// Gestion des variables ///
 	
 	//Getter & Setter pour actual_color
-	public static void setColorA(int n){
-		Recepteur.actual_color = n;
+	public void setColorA(int n){
+		this.actual_color = n;
 	}
 	
-	public static int getColorA(){
-		return Recepteur.actual_color;
+	public int getColorA(){
+		return this.actual_color;
 	}
 	
 	//Getter & Setter pour sent_color
-	public static void setColorS(int n){
-		Recepteur.sent_color = n;
+	public void setColorS(int n){
+		this.sent_color = n;
 	}
 	
-	public static int getColorS(){
-		return Recepteur.sent_color;
+	public int getColorS(){
+		return this.sent_color;
 	}
 	
 	//Setter pour position
-	public static void setPos(int[][] pos){
-		Recepteur.position = pos;
+	public void setPos(int[][] pos){
+		this.position = pos;
 	}
 	
 	//Setter pour obstacle
-	public static void setObstacle(int[][] pos){
-		Recepteur.obstacle = pos;
+	public void setObstacle(int[][] pos){
+		this.obstacle = pos;
 	}
 
    
@@ -131,7 +131,7 @@ public class Recepteur implements Behavior{
             System.out.println(e);   	
             }
         
-        if(Recepteur.getColorS() != Recepteur.getColorA()) {
+        if(this.getColorS() != this.getColorA()) {
         	this.travel(3);
             
 

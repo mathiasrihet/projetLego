@@ -13,7 +13,7 @@ public class Couleur {
 
  
 
-static float[] red_initial = new float[]{255,160,122};
+	static float[] red_initial = new float[]{255,160,122};
 
     static float[] blue_initial = new float[]{30,144,255};
 
@@ -27,18 +27,7 @@ static float[] red_initial = new float[]{255,160,122};
 
  
 
-private static float[] initial_color() {
-
-	Port s3 = LocalEV3.get().getPort("S3");
-
-    EV3ColorSensor colorSensor = new EV3ColorSensor(s3);
-
-
- 
-
-    SampleProvider color =  colorSensor.getRGBMode();
-
-    float[] sample = new float[color.sampleSize()];
+private static float[] initial_color(SampleProvider color, float[] sample) {
 
     color.fetchSample(sample, 0);
 
@@ -51,19 +40,11 @@ private static float[] initial_color() {
     float BlueValue = sample[2] ;
 
 
- 
-
-
- 
 
     LCD.drawString("R: "+ Math.round(RedValue * 100.0) + "\n V: " +  Math.round(GreenValue * 100.0) + "\n B:" +  Math.round(BlueValue * 100.0),0,4);
 
     Button.waitForAnyPress();
 
-
- 
-
-    colorSensor.close();
 
      
 
@@ -74,7 +55,7 @@ private static float[] initial_color() {
 
  
 
-public static void color_init() {
+public static void color_init(SampleProvider color, float[] sample) {
 
 
 LCD.drawString("Mettre sur rouge :",0,4);
@@ -83,7 +64,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.red_initial = initial_color();
+        Couleur.red_initial = initial_color(color, sample);
 
         
 
@@ -93,7 +74,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.blue_initial = initial_color();
+        Couleur.blue_initial = initial_color(color, sample);
 
         
 
@@ -103,7 +84,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.green_initial = initial_color();
+        Couleur.green_initial = initial_color(color, sample);
 
         
 
@@ -113,7 +94,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.orange_initial = initial_color();
+        Couleur.orange_initial = initial_color(color, sample);
 
         
 
@@ -123,7 +104,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.white_initial = initial_color();
+        Couleur.white_initial = initial_color(color, sample);
 
  
 
@@ -148,16 +129,9 @@ private static float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
 }
 
 
-public static int colorRGB() {
-	Port s3 = LocalEV3.get().getPort("S3");
-	EV3ColorSensor colorSensor = new EV3ColorSensor(s3);
-
-	SampleProvider color =  colorSensor.getRGBMode();
-	float[] sample = new float[color.sampleSize()];
+public static int colorRGB(SampleProvider color, float[] sample) {
 	color.fetchSample(sample, 0);
 
-
-	colorSensor.close();
 	
 	//sample couleur détecter par le robot
     float cosRed = cosineSimilarityRGB(  sample, Couleur.red_initial); 

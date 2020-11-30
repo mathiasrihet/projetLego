@@ -77,7 +77,7 @@ public class My_turn implements Behavior{
 	}
 	
 	public boolean takeControl() {
-		return Recepteur.getColorS() != Recepteur.getColorA();
+		return false;
 	}
 	
 	public void suppress() {
