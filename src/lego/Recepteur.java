@@ -1,30 +1,106 @@
 package lego;
-
- 
-
 import java.io.DataInputStream;
 import java.io.ObjectOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-
- 
-
 import lejos.hardware.Button;
+import lejos.hardware.motor.Motor;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3GyroSensor;
+import lejos.hardware.sensor.SensorMode;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.subsumption.Behavior;
+import lejos.utility.Delay;
 import lejos.hardware.lcd.LCD;
 import lejos.remote.nxt.BTConnector;
 import lejos.remote.nxt.NXTConnection;
-import lejos.robotics.subsumption.Behavior;
 
- 
-
- 
-
- 
 
 public class Recepteur implements Behavior{
+	private static int sent_color = 5;
+	private static int actual_color = 5;
+	private static int[][] position = {{4, 1},{3,2}};
+	private static int[][] obstacle = {{3, 5},{4, 6}};
 
- 
+	
+	/// Gestion des variables ///
+	
+	//Getter & Setter pour actual_color
+	public static void setColorA(int n){
+		Recepteur.actual_color = n;
+	}
+	
+	public static int getColorA(){
+		return Recepteur.actual_color;
+	}
+	
+	//Getter & Setter pour sent_color
+	public static void setColorS(int n){
+		Recepteur.sent_color = n;
+	}
+	
+	public static int getColorS(){
+		return Recepteur.sent_color;
+	}
+	
+	//Setter pour position
+	public static void setPos(int[][] pos){
+		Recepteur.position = pos;
+	}
+	
+	//Setter pour obstacle
+	public static void setObstacle(int[][] pos){
+		Recepteur.obstacle = pos;
+	}
+	
+	
+	/// Methodes de couleurs ///
+	
+	public void printColor(int n) {
+    String colorString;
+    switch (n) {
+      case 0:  colorString = "Rouge";
+               break;
+      case 1:  colorString = "Bleu";
+               break;
+      case 2:  colorString = "Vert";
+               break;
+      case 3:  colorString = "Orange";
+               break;
+      case 4:  colorString = "Blanc";
+               break;
+      default: colorString = "Invalid color";
+               break;
+    }
 
+    
+    LCD.clear();
+    System.out.println("Couleur recue : " + colorString);
+    LCD.refresh();
+	}
+	
+	
+	/// Methodes de mouvement ///
+	Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 56.).offset(-60);
+    Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 56.).offset(60);
+    Chassis chassis = new WheeledChassis(new Wheel[] {wheel1, wheel2}, 2);
+    MovePilot pilot = new MovePilot(chassis);
+    
+    
+	private void travel(double unite) {
+    	double epaisseurTrait = 1.5;
+    	double epaisseurCase = 12;
+    	
+    	double distance = unite*(epaisseurTrait+epaisseurCase)*10;
+    	pilot.travel(distance);
+    }
+	
+	
+	/// Methodes de comportement ///
+	
     public boolean takeControl() {
         return Button.ENTER.isDown();        //Le robot ex�cute ce comportement si on appuie sur le bouton du milieu
     }
@@ -40,111 +116,49 @@ public class Recepteur implements Behavior{
         String waiting = "Waiting";
         System.out.println("mode recepteur");
 
- 
-
- 
-
- 
 
         try {
             //LCD.drawString(waiting, 0, 0);
             //LCD.refresh();
 
- 
-
- 
-
- 
-
             BTConnector bt = new BTConnector();
             NXTConnection btc = bt.waitForConnection(100000, NXTConnection.PACKET);
 
- 
-
-            System.out.println("dans le try");
-
- 
-
+            
             if (btc !=null) {
             LCD.clear();
             LCD.drawString(connected, 0, 0);
             LCD.refresh();
 
- 
-
- 
-
- 
 
             InputStream is = btc.openInputStream();
             //OutputStream os = btc.openOutputStream();
             ObjectInputStream ois = new ObjectInputStream(is);
             //DataOutputStream dos = new DataOutputStream(os);
 
- 
-
- 
-
- 
-
             int[] valeurs = (int[])ois.readObject();
-            int couleur = valeurs[0];
-            int x1 = valeurs[1];
-            int y1 = valeurs[2];
-            int x2 = valeurs[3];
-            int y2 = valeurs[4];
+            this.setColorS(valeurs[0]);
+            this.setObstacle(new int[][] {{valeurs[1], valeurs[2]},{valeurs[3], valeurs[4]}});
 
- 
-
- 
-
- 
-
- 
-
- 
 
             ois.close();
             //dos.close();
             btc.close();
 
- 
-
- 
-
- 
-
-            String colorString;
-            switch (couleur) {
-              case 0:  colorString = "Rouge";
-                       break;
-              case 1:  colorString = "Bleu";
-                       break;
-              case 2:  colorString = "Vert";
-                       break;
-              case 3:  colorString = "Orange";
-                       break;
-              case 4:  colorString = "Blanc";
-                       break;
-              default: colorString = "Invalid color";
-                       break;
-            }
-
- 
-
- 
-
- 
-
-            System.out.println("Couleur recue : " + colorString);
-            Button.RIGHT.waitForPressAndRelease();
-            LCD.clear();
+            this.printColor(sent_color);
+            
+            
             } else {
                 System.out.println("Pas de connexion");
-                Button.RIGHT.waitForPressAndRelease();
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e);   	
+            }
+        
+        if(Recepteur.getColorS() != Recepteur.getColorA()) {
+        	this.travel(3);
+            
+
         }
     }
 

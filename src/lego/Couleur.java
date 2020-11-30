@@ -5,12 +5,12 @@ import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
+import lejos.robotics.subsumption.Arbitrator;
 import lejos.utility.Delay;
 
 
 public class Couleur {
 
-public static String actual_color = "";
  
 
 static float[] red_initial = new float[]{255,160,122};
@@ -23,7 +23,7 @@ static float[] red_initial = new float[]{255,160,122};
 
     static float[] white_initial = new float[]{255,255,255};
 
- 
+
 
  
 
@@ -148,7 +148,7 @@ private static float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
 }
 
 
-public static String colorRGB() {
+public static int colorRGB() {
 	Port s3 = LocalEV3.get().getPort("S3");
 	EV3ColorSensor colorSensor = new EV3ColorSensor(s3);
 
@@ -156,10 +156,6 @@ public static String colorRGB() {
 	float[] sample = new float[color.sampleSize()];
 	color.fetchSample(sample, 0);
 
-
-	LCD.drawString("R: "+ Couleur.red_initial[0] + "\n V: " +  Couleur.red_initial[1] + "\n B:" +  Couleur.red_initial[2],0,4);
-	Delay.msDelay(1000);
-	LCD.clear();
 
 	colorSensor.close();
 	
@@ -171,23 +167,23 @@ public static String colorRGB() {
     float cosWhite = cosineSimilarityRGB(  sample, Couleur.white_initial);
     float cosMax = Math.max(Math.max(Math.max(cosRed,cosBlue),Math.max(cosGreen,cosOrange)),cosWhite);
     
-    String colorString = "";
+    int colorInt = 5;
     if (cosMax == cosRed ){
-        colorString = "Rouge";
+        colorInt = 0;
     }
     if (cosMax == cosBlue){
-        colorString = "Bleu";
+        colorInt = 1;
     }
     if (cosMax == cosGreen ){
-        colorString = "Vert";
+        colorInt = 2;
     }
     if (cosMax == cosOrange ){
-        colorString = "Orange";
+        colorInt = 3;
     }
     if (cosMax == cosWhite ){
-        colorString = "Blanc";
+        colorInt = 4;
     }
-	return colorString ;
+	return colorInt ;
 }
  
 

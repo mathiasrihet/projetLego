@@ -9,7 +9,7 @@ public class Main {
 	//Main avec les 4 Behavior
 
 	public static void main(String[] args) {
-		
+
 		//Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
 		My_turn b2 = new My_turn(); //return down	
 		Avoid b3 = new Avoid(); //return false
@@ -19,6 +19,7 @@ public class Main {
 		Behavior[] bArray = {b5, b6, b2, b3, b4}; // Du moins prioritaire au plus prioritaire.
 		Arbitrator arby = new Arbitrator(bArray);
 		b4.setArbi(arby);
+
 		
 		//Couleur.color_init();
 		
