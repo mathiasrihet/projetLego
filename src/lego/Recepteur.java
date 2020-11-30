@@ -55,32 +55,8 @@ public class Recepteur implements Behavior{
 	public static void setObstacle(int[][] pos){
 		Recepteur.obstacle = pos;
 	}
-	
-	
-	/// Methodes de couleurs ///
-	
-	public void printColor(int n) {
-    String colorString;
-    switch (n) {
-      case 0:  colorString = "Rouge";
-               break;
-      case 1:  colorString = "Bleu";
-               break;
-      case 2:  colorString = "Vert";
-               break;
-      case 3:  colorString = "Orange";
-               break;
-      case 4:  colorString = "Blanc";
-               break;
-      default: colorString = "Invalid color";
-               break;
-    }
 
-    
-    LCD.clear();
-    System.out.println("Couleur recue : " + colorString);
-    LCD.refresh();
-	}
+   
 	
 	
 	/// Methodes de mouvement ///
@@ -145,7 +121,7 @@ public class Recepteur implements Behavior{
             //dos.close();
             btc.close();
 
-            this.printColor(sent_color);
+            Couleur.printColor(sent_color);
             
             
             } else {

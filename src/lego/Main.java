@@ -9,6 +9,8 @@ public class Main {
 	//Main avec les 4 Behavior
 
 	public static void main(String[] args) {
+		
+		ColorThread CaptationCouleur = new ColorThread();
 
 		//Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
 		My_turn b2 = new My_turn(); //return down	
@@ -27,8 +29,8 @@ public class Main {
 		LCD.refresh();
 		Button.waitForAnyPress();//Le robot attend confirmation du d�marrage par pression d'un bouton.
 		
-		
-		arby.go();
+		CaptationCouleur.start();
+		//arby.go();
 		}
 	}
 

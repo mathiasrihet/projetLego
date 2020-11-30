@@ -187,4 +187,25 @@ public static int colorRGB() {
 }
  
 
+public static void printColor(int n) {
+    String colorString = "";
+    switch (n) {
+      case 0:  colorString = "Rouge";
+               break;
+      case 1:  colorString = "Bleu";
+               break;
+      case 2:  colorString = "Vert";
+               break;
+      case 3:  colorString = "Orange";
+               break;
+      case 4:  colorString = "Blanc";
+               break;
+      default: colorString = "Invalid color";
+               break;
+    
+    }
+       LCD.clear();
+       System.out.println("Couleur: " + colorString);
+       LCD.refresh();
+   	}
 }
