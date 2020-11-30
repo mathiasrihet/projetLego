@@ -19,7 +19,7 @@ public class Main {
 		float[] sample = new float[color.sampleSize()];
 
 		//Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
-		My_turn b2 = new My_turn(); //return down	
+		My_turn b2 = new My_turn(); //return false	
 		Avoid b3 = new Avoid(); //return false
 		Recepteur b5 = new Recepteur(); //Button enter
 		Emetteur b6 = new Emetteur(); //Button up
