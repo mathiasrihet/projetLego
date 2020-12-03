@@ -66,22 +66,63 @@ public class Recepteur implements Behavior{
     MovePilot pilot = new MovePilot(chassis);
     
     
+    //Avancer de n cases
 	private void travel(double unite) {
+		
+		//Mouvement
     	double epaisseurTrait = 1.5;
     	double epaisseurCase = 12;
     	
     	double distance = unite*(epaisseurTrait+epaisseurCase)*10;
     	pilot.travel(distance);
+    	
+    	//Gestion de coordonnées
+      	this.position[0][Utils.is_parallel_to(position)] += unite*Utils.direction(this.position);
+      	this.position[1][Utils.is_parallel_to(position)] += unite*Utils.direction(this.position);
+    	
     }
 	
+	private void turn180() {
+		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
+		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+		gyro.reset();
+		float[] angle = new float[]{0.0f};
+		
+		//Mouvement
+		pilot.travel(1);
+		
+		while(pilot.isMoving())Thread.yield();
+			Motor.B.forward();
+		while(Math.abs(angle[0])<180.f) {
+			Delay.msDelay(100);
+			angleProvider.fetchSample(angle, 0);
+		}
+		gyro.close();
+		Motor.B.stop(true);
+		
+		//Gestion de coordonnées
+		int direction = Utils.direction(this.position);
+		if(Utils.is_parallel_to(this.position)==0) {
+			this.position[1][0] += 2*direction;
+			this.position[1][1] += -2*direction;
+		}else{
+			this.position[1][0] += 2*direction;
+			this.position[1][1] += 2*direction;
+		}
+		
+		
+	}
 	
-	/// Methodes de comportement ///
+	
+	/// Methodes Behavior ///
 	
     public boolean takeControl() {
         return Button.ENTER.isDown();        //Le robot ex�cute ce comportement si on appuie sur le bouton du milieu
     }
     
     public void suppress() {
+		Motor.B.stop(true);
+		Motor.C.stop(true);
     }
 
  
@@ -131,8 +172,21 @@ public class Recepteur implements Behavior{
             System.out.println(e);   	
             }
         
-        if(this.getColorS() != this.getColorA()) {
-        	this.travel(3);
+        
+        if(this.sent_color != this.actual_color) {
+            //Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
+          	int [] destination = Utils.lookFor(this.sent_color, this.position, this.obstacle);
+          	
+          	pilot.setLinearSpeed(40);
+          	
+          	//Déplacement sur l'axe parallèle à celui du robot
+          	if (Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[0][Utils.is_parallel_to(this.position)])>Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[1][Utils.is_parallel_to(this.position)])) {
+			this.turn180();
+			
+			
+          	}
+          	this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
+
             
 
         }

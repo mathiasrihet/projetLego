@@ -83,6 +83,16 @@ public class Utils {
 	   }
    }
    
+   //Renvoie 1 si le robot est dans la même direction que son axe, -1 dans la direction opposée
+   public static int direction(int[][] position) {
+	   if (position[0][is_parallel_to(position)]-position[1][is_parallel_to(position)] > 0) {
+		   return 1;
+	   }else {
+		   return -1;
+	   }
+   }
+   
+   
    //Retourne l'équivalent int d'une couleur aléatoire
    public static int colorchoice() {
 		Random rand = new Random();
