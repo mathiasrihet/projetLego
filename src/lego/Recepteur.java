@@ -28,6 +28,7 @@ public class Recepteur implements Behavior{
 	
 	private SampleProvider color;
 	private float[] sample;
+	private Couleur refCouleur;
 
 	
 	/// Gestion des variables ///
@@ -50,9 +51,13 @@ public class Recepteur implements Behavior{
 		return this.sent_color;
 	}
 	
-	//Setter pour position
+	//Getter & Setter pour position
 	public void setPos(int[][] pos){
 		this.position = pos;
+	}
+	
+	public int[][] getPos() {
+		return this.position;
 	}
 	
 	//Setter pour obstacle
@@ -66,6 +71,10 @@ public class Recepteur implements Behavior{
 	
 	public void setSample(float[] sample) {
 		this.sample = sample;
+	}
+	
+	public void setRefCouleur(Couleur refCouleur) {
+		this.refCouleur = refCouleur;
 	}
 
    
@@ -139,7 +148,7 @@ public class Recepteur implements Behavior{
 		while(pilot.isMoving())Thread.yield();
 			Motor.B.forward();
 		while(Math.abs(angle[0])<90) {
-			Delay.msDelay(100);
+			Delay.msDelay(200);
 			angleProvider.fetchSample(angle, 0);
 			}
 		gyro.close();
@@ -159,7 +168,7 @@ public class Recepteur implements Behavior{
 			Motor.C.forward();
 			Motor.B.backward();
 		while(Math.abs(angle[0])<90) {
-			Delay.msDelay(100);
+			Delay.msDelay(200);
 			angleProvider.fetchSample(angle, 0);	
 		}
 		gyro.close();
@@ -232,7 +241,6 @@ public class Recepteur implements Behavior{
             //Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
           	int [] destination = Utils.lookFor(this.sent_color, this.position, this.obstacle);
           	
-          	pilot.setLinearSpeed(20);
           	
           	while(this.position[0][0]!= destination[0] || this.position[0][1] != destination[1]) {
           		
@@ -272,7 +280,7 @@ public class Recepteur implements Behavior{
 			      	this.position[0][Utils.is_parallel_to(position)] += Utils.direction(this.position);
 			      	this.position[1][Utils.is_parallel_to(position)] += Utils.direction(this.position);
 				}
-          	this.actual_color = Couleur.colorRGB(this.color, this.sample);
+          	this.actual_color = refCouleur.colorRGB(this.color, this.sample);
     		Couleur.printColor(this.actual_color);
 		}
 		System.out.println("success !");

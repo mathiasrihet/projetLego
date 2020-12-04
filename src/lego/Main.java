@@ -17,6 +17,9 @@ public class Main {
 		EV3ColorSensor colorSensor = new EV3ColorSensor(s3);
 		SampleProvider color =  colorSensor.getRGBMode();
 		float[] sample = new float[color.sampleSize()];
+		
+		Couleur refCouleur = new Couleur();
+		refCouleur.color_init(color, sample);
 
 		//Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
 		My_turn b2 = new My_turn(); //return false	
@@ -30,10 +33,11 @@ public class Main {
 		b4.setSensor(colorSensor);
 		b5.setColor(color);
 		b5.setSample(sample);
+		b5.setRefCouleur(refCouleur);
+		b6.setPos(b5.getPos());
 		
 		//ColorThread CaptationCouleur = new ColorThread(b5, color ,sample);
-		
-		//Couleur.color_init();
+
 		
 		LCD.drawString("Je suis prêt!",0,4);
 		LCD.refresh();

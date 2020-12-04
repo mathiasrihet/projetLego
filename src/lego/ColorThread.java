@@ -5,19 +5,21 @@ import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
 public class ColorThread extends Thread {
-	private Recepteur obj;
+	private Recepteur cible;
 	private SampleProvider color;
 	private float[] sample;
+	private Couleur refCouleur;
 	
-	ColorThread(Recepteur obj, SampleProvider color, float[] sample){
-		this.obj = obj;
+	ColorThread(Recepteur cible, SampleProvider color, float[] sample, Couleur refCouleur){
+		this.cible = cible;
 		this.color = color;
 		this.sample = sample;
+		this.refCouleur = refCouleur;
 	}
 	
 	public void run() {
-		obj.setColorA(Couleur.colorRGB(color, sample));
-		Couleur.printColor(obj.getColorA());
+		cible.setColorA(refCouleur.colorRGB(color, sample));
+		Couleur.printColor(cible.getColorA());
 		Delay.msDelay(500);
 	}
 }

@@ -29,6 +29,11 @@ import java.io.ObjectOutputStream;
 
 
 public class Emetteur implements Behavior{
+	private int[][] position;
+	
+public void setPos(int[][] position) {
+	this.position = position;
+}
 
 
 public boolean takeControl() {

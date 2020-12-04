@@ -13,21 +13,21 @@ public class Couleur {
 
  
 
-	static float[] red_initial = new float[]{255,160,122};
+	private float[] red_initial = new float[]{255,160,122};
 
-    static float[] blue_initial = new float[]{30,144,255};
+    private float[] blue_initial = new float[]{30,144,255};
 
-    static float[] green_initial = new float[]{50,205,50};
+    private float[] green_initial = new float[]{50,205,50};
 
-    static float[] orange_initial = new float[]{255,165,0};
+    private float[] orange_initial = new float[]{255,165,0};
 
-    static float[] white_initial = new float[]{255,255,255};
+    private float[] white_initial = new float[]{255,255,255};
 
 
 
  
 
-private static float[] initial_color(SampleProvider color, float[] sample) {
+private float[] initial_color(SampleProvider color, float[] sample) {
 
     color.fetchSample(sample, 0);
 
@@ -55,7 +55,7 @@ private static float[] initial_color(SampleProvider color, float[] sample) {
 
  
 
-public static void color_init(SampleProvider color, float[] sample) {
+public void color_init(SampleProvider color, float[] sample) {
 
 
 LCD.drawString("Mettre sur rouge :",0,4);
@@ -64,7 +64,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.red_initial = initial_color(color, sample);
+        this.red_initial = initial_color(color, sample);
 
         
 
@@ -74,7 +74,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.blue_initial = initial_color(color, sample);
+        this.blue_initial = initial_color(color, sample);
 
         
 
@@ -84,7 +84,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.green_initial = initial_color(color, sample);
+        this.green_initial = initial_color(color, sample);
 
         
 
@@ -94,7 +94,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.orange_initial = initial_color(color, sample);
+        this.orange_initial = initial_color(color, sample);
 
         
 
@@ -104,7 +104,7 @@ LCD.refresh();
 
  Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
-        Couleur.white_initial = initial_color(color, sample);
+        this.white_initial = initial_color(color, sample);
 
  
 
@@ -112,7 +112,7 @@ LCD.refresh();
 
 }
 
-private static float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
+private float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
     float dotProduct = 0;
     float normA = 0;
     float normB = 0;
@@ -129,16 +129,16 @@ private static float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
 }
 
 
-public static int colorRGB(SampleProvider color, float[] sample) {
+public int colorRGB(SampleProvider color, float[] sample) {
 	color.fetchSample(sample, 0);
 
 	
 	//sample couleur détecter par le robot
-    float cosRed = cosineSimilarityRGB(  sample, Couleur.red_initial); 
-    float cosBlue = cosineSimilarityRGB(  sample, Couleur.blue_initial);
-    float cosGreen = cosineSimilarityRGB(  sample, Couleur.green_initial);
-    float cosOrange = cosineSimilarityRGB(  sample, Couleur.orange_initial);
-    float cosWhite = cosineSimilarityRGB(  sample, Couleur.white_initial);
+    float cosRed = this.cosineSimilarityRGB(  sample, this.red_initial); 
+    float cosBlue = this.cosineSimilarityRGB(  sample, this.blue_initial);
+    float cosGreen = this.cosineSimilarityRGB(  sample, this.green_initial);
+    float cosOrange = this.cosineSimilarityRGB(  sample, this.orange_initial);
+    float cosWhite = this.cosineSimilarityRGB(  sample, this.white_initial);
     float cosMax = Math.max(Math.max(Math.max(cosRed,cosBlue),Math.max(cosGreen,cosOrange)),cosWhite);
     
     int colorInt = 5;
@@ -179,7 +179,7 @@ public static void printColor(int n) {
     
     }
        LCD.clear();
-       System.out.println("Couleur: " + colorString);
+       LCD.drawString("Couleur: " + colorString, 0, 4);
        LCD.refresh();
    	}
 }
