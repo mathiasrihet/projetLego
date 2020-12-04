@@ -19,7 +19,7 @@ public class Main {
 		float[] sample = new float[color.sampleSize()];
 		
 		Couleur refCouleur = new Couleur();
-		refCouleur.color_init(color, sample);
+		//refCouleur.color_init(color, sample);
 
 		//Your_turn b1 = new Your_turn(); //Le robot attends que l'autre lui envoie un signal bluetooth.
 		My_turn b2 = new My_turn(); //return false	
