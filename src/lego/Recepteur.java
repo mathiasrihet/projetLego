@@ -23,8 +23,8 @@ import lejos.remote.nxt.NXTConnection;
 public class Recepteur implements Behavior{
 	private int sent_color = 5;
 	private int actual_color = 0;
-	private int[][] position = {{0, 0},{1,-1}};
-	private int[][] obstacle = {{3, 5},{4, 6}};
+	private int[][] position = {{0, 0},{-1,1}};
+	private int[][] obstacle = {{4, 5},{5, 4}};
 	
 	private SampleProvider color;
 	private float[] sample;
