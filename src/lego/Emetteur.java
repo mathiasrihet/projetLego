@@ -144,13 +144,13 @@ public void action() {
 
  
 
-            int x1 = 0;
+            int x1 = 4;
 
-            int y1 = 0;
+            int y1 = 5;
 
-            int x2 = 1;
+            int x2 = 5;
 
-            int y2 = 1;
+            int y2 = 4;
 
 
 
