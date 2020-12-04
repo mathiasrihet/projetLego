@@ -241,6 +241,7 @@ public class Recepteur implements Behavior{
             //Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
           	int [] destination = Utils.lookFor(this.sent_color, this.position, this.obstacle);
           	
+          	pilot.setLinearSpeed(30);
           	
           	while(this.position[0][0]!= destination[0] || this.position[0][1] != destination[1]) {
           		
