@@ -82,6 +82,7 @@ public class Recepteur implements Behavior{
     	
     }
 	
+	//Tourner à 180 degrés
 	private void turn180() {
 		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
 		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
@@ -113,6 +114,46 @@ public class Recepteur implements Behavior{
 		
 	}
 	
+
+	//Tourne à droite
+	private void turn_right() {
+		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
+		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+		gyro.reset();
+		float[] angle = new float[]{0.00f};
+		
+		
+		pilot.travel(1);
+		
+		while(pilot.isMoving())Thread.yield();
+			Motor.B.forward();
+		while(Math.abs(angle[0])<90) {
+			Delay.msDelay(100);
+			angleProvider.fetchSample(angle, 0);
+			}
+		gyro.close();
+		}
+	
+	
+	//Tourne à gauche
+	private void turn_left() {
+		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
+		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+		gyro.reset();
+		float[] angle = new float[]{0.00f};
+		
+		pilot.travel(1);
+		
+		while(pilot.isMoving())Thread.yield();
+			Motor.C.forward();
+			Motor.B.backward();
+		while(Math.abs(angle[0])<90) {
+			Delay.msDelay(100);
+			angleProvider.fetchSample(angle, 0);	
+		}
+		gyro.close();
+	}
+	
 	
 	/// Methodes Behavior ///
 	
@@ -128,7 +169,6 @@ public class Recepteur implements Behavior{
  
 
     public void action() {
-        // TODO Auto-generated method stub
         String connected = "Connected";
         String waiting = "Waiting";
         System.out.println("mode recepteur");
@@ -173,23 +213,52 @@ public class Recepteur implements Behavior{
             }
         
         
-        if(this.sent_color != this.actual_color) {
+        
+        
+        
+        //Partie déplacement //
+        
             //Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
           	int [] destination = Utils.lookFor(this.sent_color, this.position, this.obstacle);
           	
           	pilot.setLinearSpeed(40);
           	
+          	while(this.position[0][0]!= destination[0] || this.position[0][1] != destination[1]) {
+          		
+          	if(this.position[0][Utils.is_parallel_to(this.position)] != destination[Utils.is_parallel_to(this.position)]) {
           	//Déplacement sur l'axe parallèle à celui du robot
-          	if (Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[0][Utils.is_parallel_to(this.position)])>Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[1][Utils.is_parallel_to(this.position)])) {
-			this.turn180();
-			
-			
-          	}
-          	this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
+	          	if (Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[0][Utils.is_parallel_to(this.position)])>Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[1][Utils.is_parallel_to(this.position)])) {
+					this.turn180();
+		          	}
+	          		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 
-            
+				
+			}else{//Le robot tourne a droite ou a gauche et change les coordonnées en fonction
+				int diff = Utils.sign(destination[Utils.isnot_parallel_to(position)]-position[0][Utils.isnot_parallel_to(position)]);
+				
+				
+				if(Utils.is_parallel_to(position)==0) {//Cas parallel_to X
+					if(diff == Utils.direction(position)) {
+						this.turn_left();
+						this.position[1][1] += -2*Utils.direction(position);
+					}else {
+						this.turn_right();
+						this.position[1][0] += 2*Utils.direction(position);
+					}
+				}else {								//Cas pallel_to Y
+					if(diff == Utils.direction(position)) {
+						this.turn_right();
+						this.position[1][1] += 2*Utils.direction(position);
+						}else {
+							this.turn_left();
+							this.position[1][0] += 2*Utils.direction(position);
+						}
+					}
+				}
 
-        }
+		}
+		System.out.println("success !");
+
     }
 
  
