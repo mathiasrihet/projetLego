@@ -264,12 +264,14 @@ public class Recepteur implements Behavior{
 					}else {
 						this.travel(0.5);
 						this.turn_right(gyro, angleProvider, angle);
+						this.travel(0.5);
 						this.position[1][0] += 2*Utils.direction(position);
 					}
 				}else {								//Cas parallel_to Y
 					if(diff == Utils.direction(position)) {
 						this.travel(0.5);
 						this.turn_right(gyro, angleProvider, angle);
+						this.travel(0.5);
 						this.position[1][1] += 2*Utils.direction(position);
 						}else {
 							this.turn_left(gyro, angleProvider, angle);
