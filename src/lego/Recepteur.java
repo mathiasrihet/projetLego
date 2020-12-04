@@ -104,11 +104,9 @@ public class Recepteur implements Behavior{
     }
 	
 	//Tourner à 180 degrés
-	private void turn180() {
-		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
-		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+	private void turn180(EV3GyroSensor gyro, SensorMode angleProvider, float[] angle) {
 		gyro.reset();
-		float[] angle = new float[]{0.0f};
+		angle[0] = 0.00f;
 		
 		//Mouvement
 		pilot.travel(1);
@@ -119,7 +117,6 @@ public class Recepteur implements Behavior{
 			Delay.msDelay(100);
 			angleProvider.fetchSample(angle, 0);
 		}
-		gyro.close();
 		Motor.B.stop(true);
 		
 		//Gestion de coordonnées
@@ -137,11 +134,9 @@ public class Recepteur implements Behavior{
 	
 
 	//Tourne à droite
-	private void turn_right() {
-		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
-		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+	private void turn_right(EV3GyroSensor gyro, SensorMode angleProvider, float[] angle) {
 		gyro.reset();
-		float[] angle = new float[]{0.00f};
+		angle[0] = 0.00f;
 		
 		pilot.travel(1);
 		
@@ -151,16 +146,14 @@ public class Recepteur implements Behavior{
 			Delay.msDelay(200);
 			angleProvider.fetchSample(angle, 0);
 			}
-		gyro.close();
+		Motor.B.stop(true);
 		}
 	
 	
 	//Tourne à gauche
-	private void turn_left() {
-		EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
-		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+	private void turn_left(EV3GyroSensor gyro, SensorMode angleProvider, float[] angle) {
 		gyro.reset();
-		float[] angle = new float[]{0.00f};
+		angle[0] = 0.00f;
 		
 		pilot.travel(1);
 		
@@ -171,7 +164,8 @@ public class Recepteur implements Behavior{
 			Delay.msDelay(200);
 			angleProvider.fetchSample(angle, 0);	
 		}
-		gyro.close();
+		Motor.C.stop(true);
+		Motor.B.stop(true);
 	}
 	
 	
@@ -241,6 +235,11 @@ public class Recepteur implements Behavior{
             //Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
           	int [] destination = Utils.lookFor(this.sent_color, this.position, this.obstacle);
           	
+          	EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
+    		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
+    		gyro.reset();
+    		float[] angle = new float[]{0.00f};
+          	
           	pilot.setLinearSpeed(30);
           	
           	while(this.position[0][0]!= destination[0] || this.position[0][1] != destination[1]) {
@@ -248,7 +247,7 @@ public class Recepteur implements Behavior{
           	if(this.position[0][Utils.is_parallel_to(this.position)] != destination[Utils.is_parallel_to(this.position)]) {
           	//Déplacement sur l'axe parallèle à celui du robot
 	          	if (Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[0][Utils.is_parallel_to(this.position)])>Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[1][Utils.is_parallel_to(this.position)])) {
-					this.turn180();
+					this.turn180(gyro, angleProvider, angle);
 		          	}
 	          		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 
@@ -259,21 +258,21 @@ public class Recepteur implements Behavior{
 				
 				if(Utils.is_parallel_to(position)==0) {//Cas parallel_to X
 					if(diff == Utils.direction(position)) {
-						this.turn_left();
+						this.turn_left(gyro, angleProvider, angle);
 						this.position[1][1] += -2*Utils.direction(position);
 
 					}else {
 						this.travel(0.5);
-						this.turn_right();
+						this.turn_right(gyro, angleProvider, angle);
 						this.position[1][0] += 2*Utils.direction(position);
 					}
 				}else {								//Cas parallel_to Y
 					if(diff == Utils.direction(position)) {
 						this.travel(0.5);
-						this.turn_right();
+						this.turn_right(gyro, angleProvider, angle);
 						this.position[1][1] += 2*Utils.direction(position);
 						}else {
-							this.turn_left();
+							this.turn_left(gyro, angleProvider, angle);
 							this.position[1][0] += 2*Utils.direction(position);
 						}
 					}
