@@ -107,7 +107,8 @@ public void action() {
 
                  */
 
-            int nombreAleatoire = (int)(Math.random() * 5);
+            //int nombreAleatoire = (int)(Math.random() * 5);
+            int nombreAleatoire = 2;
 
 
             Couleur.printColor(nombreAleatoire);
