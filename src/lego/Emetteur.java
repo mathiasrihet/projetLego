@@ -3,9 +3,6 @@ package lego;
 
  
 
-
- 
-
 import java.io.OutputStream;
 
 import lejos.hardware.Button;
@@ -30,71 +27,30 @@ import lejos.robotics.subsumption.Behavior;
 import java.io.ObjectOutputStream;
 
 
- 
-
-
- 
-
- 
-
-
- 
-
- 
-
-
- 
-
-
- 
 
 public class Emetteur implements Behavior{
 
 
- 
-
 public boolean takeControl() {
-
 return Button.UP.isDown();
-
 }
 
- 
 
 public void suppress() {
-
 }
 
- 
 
-
- 
 
 public void action() {
 
-        // TODO Auto-generated method stub
-
         String connected = "Connected";
-
         String waiting = "Waiting";
-
         EV3 ev = LocalEV3.get();
 
         System.out.println("mode emetteur");
 
-        //Button.RIGHT.waitForPressAndRelease();//a enlever à terme
-
         try {
 
-            System.out.println("dans le try");
-
-
- 
-
- 
-
-
- 
 
             //LCD.drawString(waiting, 0, 0);
 
@@ -110,11 +66,6 @@ public void action() {
 
  //Adresse de Hodor15
 
- 
-
-
- 
-
 
  
 
@@ -125,12 +76,6 @@ public void action() {
             LCD.refresh();
 
 
- 
-
- 
-
-
- 
 
             //InputStream is = btc.openInputStream();
 
@@ -141,15 +86,7 @@ public void action() {
             ObjectOutputStream oos = new ObjectOutputStream(os);
 
 
- 
 
- 
-
-
- 
-
-
- 
 
                 /* On utilise la norme suivante:
 
@@ -168,14 +105,8 @@ public void action() {
             int nombreAleatoire = (int)(Math.random() * 5);
 
 
- 
-
- 
-
-
- 
-
-            String colorString = " " + nombreAleatoire;
+            Couleur.printColor(nombreAleatoire);
+ /*           String colorString = " " + nombreAleatoire;
 
             switch (nombreAleatoire) {
 
@@ -204,7 +135,7 @@ public void action() {
           break;
 
             }
-
+*/
 
  
 
@@ -222,12 +153,6 @@ public void action() {
             int y2 = 1;
 
 
- 
-
- 
-
-
- 
 
             int[] myIntArray = new int[]{nombreAleatoire,x1,y1,x2,y2};
 
@@ -235,17 +160,18 @@ public void action() {
  
 
  
-
+            
 
  
-
-            System.out.println("\n\nEnvoi : " + colorString);
+            System.out.println("\n\nEnvoi en cours ");
+            LCD.refresh();
 
             oos.writeObject(myIntArray); // ?crit une valeur dans le flux
 
             oos.flush(); // force l?envoi
 
-            System.out.println("\nEnvoye : " + colorString);
+            System.out.println("\nEnvoie fini");
+            LCD.refresh();
 
             //dis.close();
 

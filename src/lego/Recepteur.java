@@ -8,6 +8,7 @@ import lejos.hardware.motor.Motor;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.hardware.sensor.SensorMode;
+import lejos.robotics.SampleProvider;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
@@ -21,9 +22,12 @@ import lejos.remote.nxt.NXTConnection;
 
 public class Recepteur implements Behavior{
 	private int sent_color = 5;
-	private int actual_color = 5;
-	private int[][] position = {{4, 1},{3,2}};
+	private int actual_color = 0;
+	private int[][] position = {{0, 0},{-1,-1}};
 	private int[][] obstacle = {{3, 5},{4, 6}};
+	
+	private SampleProvider color;
+	private float[] sample;
 
 	
 	/// Gestion des variables ///
@@ -54,6 +58,14 @@ public class Recepteur implements Behavior{
 	//Setter pour obstacle
 	public void setObstacle(int[][] pos){
 		this.obstacle = pos;
+	}
+	
+	public void setColor(SampleProvider color) {
+		this.color = color;
+	}
+	
+	public void setSample(float[] sample) {
+		this.sample = sample;
 	}
 
    
@@ -121,7 +133,6 @@ public class Recepteur implements Behavior{
 		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
 		gyro.reset();
 		float[] angle = new float[]{0.00f};
-		
 		
 		pilot.travel(1);
 		
@@ -241,12 +252,15 @@ public class Recepteur implements Behavior{
 					if(diff == Utils.direction(position)) {
 						this.turn_left();
 						this.position[1][1] += -2*Utils.direction(position);
+
 					}else {
+						this.travel(0.5);
 						this.turn_right();
 						this.position[1][0] += 2*Utils.direction(position);
 					}
-				}else {								//Cas pallel_to Y
+				}else {								//Cas parallel_to Y
 					if(diff == Utils.direction(position)) {
+						this.travel(0.5);
 						this.turn_right();
 						this.position[1][1] += 2*Utils.direction(position);
 						}else {
@@ -254,8 +268,11 @@ public class Recepteur implements Behavior{
 							this.position[1][0] += 2*Utils.direction(position);
 						}
 					}
+				
+			      	this.position[0][Utils.is_parallel_to(position)] += Utils.direction(this.position);
+			      	this.position[1][Utils.is_parallel_to(position)] += Utils.direction(this.position);
 				}
-
+          	this.actual_color = Couleur.colorRGB(this.color, this.sample);
 		}
 		System.out.println("success !");
 

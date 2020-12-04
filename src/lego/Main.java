@@ -28,8 +28,10 @@ public class Main {
 		Arbitrator arby = new Arbitrator(bArray);
 		b4.setArbi(arby);
 		b4.setSensor(colorSensor);
+		b5.setColor(color);
+		b5.setSample(sample);
 		
-		ColorThread CaptationCouleur = new ColorThread(b5, color ,sample);
+		//ColorThread CaptationCouleur = new ColorThread(b5, color ,sample);
 		
 		//Couleur.color_init();
 		
@@ -37,7 +39,7 @@ public class Main {
 		LCD.refresh();
 		Button.waitForAnyPress();//Le robot attend confirmation du d�marrage par pression d'un bouton.
 		
-		CaptationCouleur.start();
+		//CaptationCouleur.start();
 		arby.go();
 		}
 	}
