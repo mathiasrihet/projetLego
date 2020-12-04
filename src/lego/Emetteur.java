@@ -149,13 +149,13 @@ public void action() {
 
  
 
-            int x1 = 4;
+            int x1 = this.position[0][0];
 
-            int y1 = 5;
+            int y1 = this.position[0][1];
 
-            int x2 = 5;
+            int x2 = this.position[1][0];
 
-            int y2 = 4;
+            int y2 = this.position[1][1];
 
 
 
