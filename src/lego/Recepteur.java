@@ -283,6 +283,7 @@ public class Recepteur implements Behavior{
           	this.actual_color = refCouleur.colorRGB(this.color, this.sample);
     		Couleur.printColor(this.actual_color);
 		}
+        gyro.close();
 		System.out.println("success !");
 
     }
