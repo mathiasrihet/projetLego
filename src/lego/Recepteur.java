@@ -65,6 +65,8 @@ public class Recepteur implements Behavior{
 		this.obstacle = pos;
 	}
 	
+	
+	//Setter pour la gestion des couleurs
 	public void setColor(SampleProvider color) {
 		this.color = color;
 	}
@@ -172,7 +174,7 @@ public class Recepteur implements Behavior{
 	/// Methodes Behavior ///
 	
     public boolean takeControl() {
-        return Button.ENTER.isDown();        //Le robot ex�cute ce comportement si on appuie sur le bouton du milieu
+        return Button.ENTER.isDown();        //Le robot execute ce comportement si on appuie sur le bouton du milieu
     }
     
     public void suppress() {
@@ -189,8 +191,6 @@ public class Recepteur implements Behavior{
 
 
         try {
-            //LCD.drawString(waiting, 0, 0);
-            //LCD.refresh();
 
             BTConnector bt = new BTConnector();
             NXTConnection btc = bt.waitForConnection(100000, NXTConnection.PACKET);
@@ -203,9 +203,9 @@ public class Recepteur implements Behavior{
 
 
             InputStream is = btc.openInputStream();
-            //OutputStream os = btc.openOutputStream();
+
             ObjectInputStream ois = new ObjectInputStream(is);
-            //DataOutputStream dos = new DataOutputStream(os);
+
 
             int[] valeurs = (int[])ois.readObject();
             this.setColorS(valeurs[0]);
@@ -213,7 +213,7 @@ public class Recepteur implements Behavior{
 
 
             ois.close();
-            //dos.close();
+
             btc.close();
 
             Couleur.printColor(sent_color);
@@ -235,6 +235,7 @@ public class Recepteur implements Behavior{
             //Le robot cherche la case la plus proche de la couleur demandée (non-occupée)
           	int [] destination = Utils.lookFor(this.sent_color, this.position, this.obstacle);
           	
+          	//Création des variables nécessaires au bon fonctionnement du gyroscope
           	EV3GyroSensor gyro = new EV3GyroSensor(SensorPort.S2);
     		SensorMode angleProvider = (SensorMode) gyro.getAngleMode();
     		gyro.reset();
@@ -242,17 +243,19 @@ public class Recepteur implements Behavior{
           	
           	pilot.setLinearSpeed(30);
           	
-          	while(this.position[0][0]!= destination[0] || this.position[0][1] != destination[1]) {
+          	//while(this.sent_color != this.actual_color) //condition envisagee à terme
+          	while(this.position[0][0]!= destination[0] || this.position[0][1] != destination[1]) { //condition pour les derniers tests unitaires en date (le robot se déplace sur le damier virtuel independamment de la vraie carte)
+          	
           		
-          	if(this.position[0][Utils.is_parallel_to(this.position)] != destination[Utils.is_parallel_to(this.position)]) {
-          	//Déplacement sur l'axe parallèle à celui du robot
-	          	if (Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[0][Utils.is_parallel_to(this.position)])>Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[1][Utils.is_parallel_to(this.position)])) {
+          	if(this.position[0][Utils.is_parallel_to(this.position)] != destination[Utils.is_parallel_to(this.position)]) {//Déplacement sur l'axe parallèle à celui du robot si besoin
+          	
+	          	if (Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[0][Utils.is_parallel_to(this.position)])>Math.abs(destination[Utils.is_parallel_to(this.position)]-this.position[1][Utils.is_parallel_to(this.position)])) {//Demi-tour si la case se trouve derrière
 					this.turn180(gyro, angleProvider, angle);
 		          	}
-	          		this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
+	          	this.travel(Math.abs(destination [Utils.is_parallel_to(position)]-position[0][Utils.is_parallel_to(position)]));
 
 				
-			}else{//Le robot tourne a droite ou a gauche et change les coordonnées en fonction
+			}else{//Sinon le robot tourne a droite ou a gauche et change les coordonnées en fonction
 				int diff = Utils.sign(destination[Utils.isnot_parallel_to(position)]-position[0][Utils.isnot_parallel_to(position)]);
 				
 				
@@ -278,10 +281,11 @@ public class Recepteur implements Behavior{
 							this.position[1][0] += 2*Utils.direction(position);
 						}
 					}
-				
+					//Mise a jour de la position
 			      	this.position[0][Utils.is_parallel_to(position)] += Utils.direction(this.position);
 			      	this.position[1][Utils.is_parallel_to(position)] += Utils.direction(this.position);
 				}
+          	//Mise a jour de la couleur
           	this.actual_color = refCouleur.colorRGB(this.color, this.sample);
     		Couleur.printColor(this.actual_color);
 		}

@@ -27,7 +27,7 @@ import lejos.robotics.subsumption.Behavior;
 import java.io.ObjectOutputStream;
 
 
-
+//Comportement qui envoir une couleur
 public class Emetteur implements Behavior{
 	private int[][] position;
 	
@@ -57,17 +57,9 @@ public void action() {
         try {
 
 
-            //LCD.drawString(waiting, 0, 0);
-
-            //LCD.refresh();
-
-            //droite = 00:16:53:43:4E:26
-
-            //gauche = 00:16:53:43:8E:49
-
             BTConnector bt = new BTConnector();
 
-            BTConnection btc = bt.connect("00:16:53:82:76:33", NXTConnection.PACKET);//le premier param?tre est l'adresse du r?cepteur affich? sur l'?cra de l'?metteur apr?s association (pair) bluetooth
+            BTConnection btc = bt.connect("00:16:53:82:76:33", NXTConnection.PACKET);//le premier parametre est l'adresse du recepteur affiche sur l'ecran de l'emetteur apres association (pair) bluetooth
 
  //Adresse de Hodor15
 
@@ -81,12 +73,7 @@ public void action() {
             LCD.refresh();
 
 
-
-            //InputStream is = btc.openInputStream();
-
             OutputStream os = btc.openOutputStream();
-
-            //DataInputStream dis = new DataInputStream(is);
 
             ObjectOutputStream oos = new ObjectOutputStream(os);
 
@@ -107,93 +94,41 @@ public void action() {
 
                  */
 
-            //int nombreAleatoire = (int)(Math.random() * 5);
-            int nombreAleatoire = 4;
+            int nombreAleatoire = (int)(Math.random() * 5);
+            //int nombreAleatoire = 4; //pour les tests
 
 
             Couleur.printColor(nombreAleatoire);
- /*           String colorString = " " + nombreAleatoire;
-
-            switch (nombreAleatoire) {
-
-  case 0:  colorString = "Rouge";
-
-          break;
-
-  case 1:  colorString = "Bleu";
-
-          break;
-
-  case 2:  colorString = "Vert";
-
-          break;
-
-  case 3:  colorString = "Orange";
-
-          break;
-
-  case 4:  colorString = "Blanc";
-
-          break;
-
-   default: colorString = "Invalid color";
-
-          break;
-
-            }
-*/
-
- 
-
- 
-
-
- 
-
+            
+            //(x1, y1) sont les coordonnes du capteur couleur
             int x1 = this.position[0][0];
-
             int y1 = this.position[0][1];
-
+            
+            //(x2, y2) sont les coordonnes du point du robot les plus eloigne du capteur couleur
             int x2 = this.position[1][0];
-
             int y2 = this.position[1][1];
 
 
-
+            //Objet envoyé par bluetooth
             int[] myIntArray = new int[]{nombreAleatoire,x1,y1,x2,y2};
 
 
- 
-
- 
-            
 
  
             System.out.println("\n\nEnvoi en cours ");
             LCD.refresh();
 
-            oos.writeObject(myIntArray); // ?crit une valeur dans le flux
+            oos.writeObject(myIntArray); // ecrit une valeur dans le flux
 
-            oos.flush(); // force l?envoi
+            oos.flush(); // force l envoi
 
             System.out.println("\nEnvoie fini");
             LCD.refresh();
-
-            //dis.close();
 
             oos.close();
 
             btc.close();
 
-            //LCD.clear();
-
-
- 
-
- 
-
-
- 
 
         } catch (Exception e) {
 

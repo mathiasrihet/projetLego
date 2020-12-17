@@ -49,7 +49,7 @@ public class Utils {
 		   }
 	   }
    
-   //Return true si l'autre robot occupe au moins en partie les coordonnées fournies (à retravailler)
+   //Return true si l'autre robot occupe au moins en partie les coordonnées fournies
    public static boolean is_other_in(int[][] obstacle, int x, int y){
 	   if ((x==obstacle[0][0] || x==obstacle[1][0])&&(y==obstacle[0][1] || y==obstacle[1][1])){
 		   return true;

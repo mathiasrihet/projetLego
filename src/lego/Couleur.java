@@ -8,11 +8,11 @@ import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.utility.Delay;
 
-
+//Classe contenant les méthodes relatives au traitement des couleurs dans l'environnement
 public class Couleur {
 
  
-
+//Des valeurs RGB associées par défaut aux couleurs
 	private float[] red_initial = new float[]{255,160,122};
 
     private float[] blue_initial = new float[]{30,144,255};
@@ -26,7 +26,7 @@ public class Couleur {
 
 
  
-
+//Une fonction utilisée pour initialiser une couleur
 private float[] initial_color(SampleProvider color, float[] sample) {
 
     color.fetchSample(sample, 0);
@@ -43,7 +43,7 @@ private float[] initial_color(SampleProvider color, float[] sample) {
 
     LCD.drawString("R: "+ Math.round(RedValue * 100.0) + "\n V: " +  Math.round(GreenValue * 100.0) + "\n B:" +  Math.round(BlueValue * 100.0),0,4);
 
-    Button.waitForAnyPress();
+    Button.waitForAnyPress();//Le robot attend confirmation par pression d'un bouton.
 
 
      
@@ -54,7 +54,7 @@ private float[] initial_color(SampleProvider color, float[] sample) {
 
 
  
-
+//Une fonction utilisée pour initialiser une par une les cinq couleurs
 public void color_init(SampleProvider color, float[] sample) {
 
 
@@ -112,6 +112,7 @@ LCD.refresh();
 
 }
 
+//Calcul la couleur la distance cosinus entre deux couleurs données
 private float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
     float dotProduct = 0;
     float normA = 0;
@@ -128,12 +129,12 @@ private float cosineSimilarityRGB(float[] vectorA, float[] vectorB) {
     
 }
 
-
+//Calcul la couleur la plus probable d'une case
 public int colorRGB(SampleProvider color, float[] sample) {
 	color.fetchSample(sample, 0);
 
 	
-	//sample couleur dÃ©tecter par le robot
+	//sample est la couleur detectee par le robot sous forme de tableau RGB
     float cosRed = this.cosineSimilarityRGB(  sample, this.red_initial); 
     float cosBlue = this.cosineSimilarityRGB(  sample, this.blue_initial);
     float cosGreen = this.cosineSimilarityRGB(  sample, this.green_initial);
@@ -160,7 +161,7 @@ public int colorRGB(SampleProvider color, float[] sample) {
 	return colorInt ;
 }
  
-
+//Affiche à l ecran le nom en lettres d'une couleur passee en chiffres
 public static void printColor(int n) {
     String colorString = "";
     switch (n) {

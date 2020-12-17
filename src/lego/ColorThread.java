@@ -4,6 +4,7 @@ import java.lang.Thread;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
+//Definition d'un Thread pour capter la couleur en temps réel
 public class ColorThread extends Thread {
 	private Recepteur cible;
 	private SampleProvider color;
